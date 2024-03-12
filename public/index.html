@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Montserrat&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/fontawesome.min.css"
+      integrity="sha384-BY+fdrpOd3gfeRvTSMT+VUZmA728cfF9Z2G42xpaRkUGu2i3DyzpTURDo5A6CaLK"
+      crossorigin="anonymous"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Future Selfie™ - AI Image Generator</title>
+    <!-- Link to Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <style>
+      .form-control:focus {
+        border-color: #6c757d;
+        box-shadow: none;
+      }
+
+      .form-control {
+        border: none !important;
+        border-bottom: 1px solid #ced4da !important;
+      }
+
+      .custom-form-label {
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+      }
+      .btn-custom {
+        background-color: #8e44ad; /* Custom color for the button */
+        border: none;
+      }
+      .btn-custom:hover {
+        background-color: #732d91; /* Darker shade for hover state */
+      }
+      .form-section-title {
+        font-size: 1.5rem;
+        color: #4a4a4a;
+        margin-bottom: 2rem;
+      }
+      .form-row {
+        margin-bottom: 1rem;
+      }
+      header.container-fluid {
+        padding: 0px 160px;
+        background: #f8f9fa;
+      }
+      section.mt-5 {
+        padding: 0px 160px;
+      }
+      section.mt-4 {
+        padding: 50px 160px;
+      }
+      @media (max-width: 768px) {
+        header.container-fluid {
+          padding: 0px 20px;
+        }
+
+        section.mt-5 {
+          padding: 0px 20px;
+        }
+        section.mt-4 {
+          padding: 0px 20px;
+        }
+
+        section.container-fluid {
+          padding: 0px 20px;
+        }
+
+        section.container {
+          padding: 0px 20px;
+        }
+      }
+      /* Adjust the heading styles to match the design */
+      h2.mb-4 {
+        font-weight: 400; /* Example, adjust as needed */
+        color: #4a4a4a; /* Example, adjust as needed */
+      }
+
+      /* Style the form background and shadow */
+      form {
+        background-color: #fff;
+        padding: 60px;
+        max-width: 650px;
+        margin: auto;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Adjust form input styles */
+      .form-control {
+        border-radius: 0; /* Example, if design has no rounded corners */
+        border: 1px solid #ccc; /* Example, adjust as needed */
+      }
+
+      /* Style the button according to the design */
+      .btn-custom {
+        background-color: #b3226a; /* Use the exact color from the design */
+        color: white;
+        font-weight: 600;
+      }
+
+      .btn-custom:hover {
+        background-color: #9e1e5a; /* Darker shade for the hover state */
+      }
+
+      /* Style the footer to match the design */
+      footer {
+        background-color: #000;
+        color: #fff;
+        text-align: center;
+        padding: 20px 0;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        header,
+        section {
+          padding: 20px;
+        }
+        /* Other responsive styles as needed */
+      }
+      /* Center the download button */
+      .download-button-wrapper {
+        max-width: 650px;
+        margin: auto;
+        display: flex;
+        justify-content: center;
+        margin-top: 20px; /* Changed from flex-end to center */
+      }
+      label {
+        display: inline-block;
+        margin-bottom: 0.5rem;
+        color: #2c3345ff;
+        /* font-family: Poppins; */
+        font-size: 16px;
+        font-weight: 500;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="container-fluid">
+      <!-- Navigation bar -->
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <!-- Logo and brand name -->
+        <a class="navbar-brand" href="#">
+          <img
+            src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/f4QF3s4w4Ps9TD83xDp9/media/659f6f154a146ba290770422.png"
+            alt="Future Self™ Logo"
+            style="
+              height: 100px;
+              width: 100px;
+              background: transparent;
+              font-size: 20px;
+              font-family: 'Montserrat', sans-serif;
+            "
+          />
+          Future Self Institute
+        </a>
+      </nav>
+      <p
+        style="
+          font-size: 52px !important;
+          font-weight: 300;
+          padding: 80px 0px 40px 0px;
+        "
+      >
+        ai image generator
+      </p>
+    </header>
+    <!-- Section for Welcome and Video Placeholder -->
+    <section class="">
+      <h2 class="mb-4">1_welcome</h2>
+      <div class="row">
+        <!-- Video placeholder column -->
+        <div class="col-md-6">
+          <!-- Placeholder for the video; replace with actual video element or embed code -->
+          <div class="embed-responsive embed-responsive-16by9">
+            <iframe
+              class="embed-responsive-item"
+              <!--
+              src="https://player.vimeo.com/video/906563295?app_id=122963&autoplay=1&controls=1"
+              --
+            >
+              frameborder="0" allow="autoplay; fullscreen" allowfullscreen
+              ></iframe
+            >
+          </div>
+        </div>
+        <!-- Text description column -->
+        <div class="col-md-6">
+          <h2 class="mb-4"></h2>
+          <p>
+            After your guided visualization, it's time to crystallize your
+            vision. Use the form below to describe a pivotal moment of your
+            future self in your envisioned future.
+          </p>
+        </div>
+      </div>
+    </section>
+    <!-- Section for Describing the Vision -->
+    <section class="mt-4" style="background: #f6f6f6">
+      <div class="conditional">
+        <h2 class="mb-4" style="font-weight: 400">2_describe your vision</h2>
+        <p>
+          Describe a peak moment of your guided journey. Our AI generator will
+          then craft a detailed, vivid image of what your future could look
+          like, turning your dreams into a visual reality.
+        </p>
+      </div>
+      <form
+        style="
+          background-color: #fff;
+          padding: 60px;
+          max-width: 650px;
+          display: flex;
+          align-self: center;
+          flex-direction: column;
+          margin: auto;
+          box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+        "
+      >
+        <!-- Each form group for inputs -->
+        <div class="form-group" style="background: white">
+          <label for="sceneDescription" class=""
+            >1. Briefly describe the main scene, the pivotal moment of your
+            journey *</label
+          >
+          <textarea
+            class="form-control"
+            id="mainScene"
+            name="mainScene"
+            rows="2"
+            required
+            placeholder="provide a short description of the scene, 3-4 sentences max."
+          ></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="locationDescription" class=""
+            >2. Describe the location *</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="location"
+            name="location"
+            required
+            placeholder="eg in nature, at a conference, a festival, etc"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="characterDescription" class=""
+            >3. Describe the main character of this scene.*</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="mainCharacter"
+            name="mainCharacter"
+            required
+            placeholder="eg male in his mid 30's, European descent, physically fit and happy, with a mustache wearing a white linen shirt."
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="additionalCharacters" class=""
+            >4. Are there additional characters?</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="additionalCharacters"
+            name="additionalCharacters"
+            placeholder="If so, who might they be?"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="additionalInfo" class=""
+            >5. Are there distinctive details that represent your vision?</label
+          >
+          <textarea
+            class="form-control"
+            id="additionalInfo"
+            name="additionalInfo"
+            rows="2"
+            placeholder="E.g., specific colors, themes, or symbols..."
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <label for="affirmation" class=""
+            >6. Affirmation / Intention Statement</label
+          >
+          <textarea
+            class="form-control"
+            id="affirmation"
+            name="affirmation"
+            rows="2"
+            placeholder="craft an uplifting sentence that captures the essence of the scene."
+          ></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="col">
+            <label for="fullName" class="">Full Name *</label>
+            <input
+              class="form-control"
+              id="fullName"
+              name="fullName"
+              type="text"
+              placeholder="Full Name"
+              required
+            />
+          </div>
+          <div class="col">
+            <label for="emailAddress">Email *</label>
+            <input
+              class="form-control"
+              name="email"
+              id="email"
+              type="email"
+              placeholder="Email"
+              required
+            />
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button
+          type="submit"
+          class="btn btn-custom mt-4 py-2 bg-[#b3226aFF]"
+          style="background-color: #b3226aff; color: white; font-weight: 600"
+        >
+          Create Your Image / Regenerate New Image
+        </button>
+        <!-- Placeholder for loading skeleton and generated image -->
+      </form>
+      <!-- Adjusted div for the Download Image button -->
+      <div id="imagePlaceholder" style="margin-top: 20px; text-align: center">
+        <!-- Loading skeleton (hidden by default) -->
+        <div id="loadingSkeleton" style="display: none">
+          <div style="margin-bottom: 20px">
+            Generating your image, please wait...
+          </div>
+          <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+        <!-- Placeholder for the generated image (hidden by default) -->
+        <img
+          id="generatedImage"
+          src=""
+          alt="Generated Image"
+          style="width: 100%; display: none"
+        />
+      </div>
+      <div class="download-button-wrapper mb-4">
+        <button
+          type="button"
+          class="btn btn-custom bg-[#b3226aFF]"
+          style="background-color: #b3226aff; color: white; font-weight: 600"
+          onClick="handleDownload()"
+          target="_blank"
+          id="downloadButton"
+        >
+          Download Image
+        </button>
+      </div>
+    </section>
+
+    <section class="mt-5">
+      <h2 class="mb-4">3_from vision to reality</h2>
+      <div class="row">
+        <!-- Video placeholder column -->
+        <div class="col-md-6">
+          <!-- Placeholder for the video; replace with actual video element or embed code -->
+          <div class="embed-responsive embed-responsive-16by9">
+            <iframe
+              class="embed-responsive-item"
+              src="https://player.vimeo.com/video/906563286?app_id=122963&autoplay=1&controls=1"
+            >
+              frameborder="0" allow="autoplay; fullscreen" allowfullscreen
+              ></iframe
+            >
+          </div>
+        </div>
+        <!-- Text description column -->
+        <div class="col-md-6">
+          <h2 class="mb-4"></h2>
+          <p>
+            Let your FutureSelfie™ become a powerful tool in your journey of
+            goal setting and motivation. Consider taking an inspired action
+            today that brings you one step closer to your vision. Remember,
+            small changes accumulate over time.
+          </p>
+          <p>
+            <span style="color: #b3226a; font-weight: 800">
+              <a
+                href="mailto:peter@futureselfinstitute.com"
+                style="color: #b3226a; font-weight: 800; text-decoration: none"
+                target="_blank"
+              >
+                Leave a Message</a
+              >
+            </span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <div
+      style="
+        display: flex;
+        justify-content: center;
+        background-color: #000;
+        padding: 20px 0px;
+        margin-top: 10px;
+      "
+    >
+      <div
+        style="
+          display: flex;
+          justify-content: center;
+          flex-direction: column;
+          align-items: center;
+        "
+      >
+        <!-- add rounded insta and linked in round tags -->
+        <div style="display: flex; gap: 3px">
+          <a href="https://www.instagram.com/futureselfinstitute"
+            ><img
+              src="https://stcdn.leadconnectorhq.com/funnel/icons/rounded-dark/instagram-rounded-dark.svg"
+              alt="social media icon"
+              class="social-media-icon"
+          /></a>
+          <a href="https://www.linkedin.com/in/peter-oppermann/">
+            <img
+              src="https://stcdn.leadconnectorhq.com/funnel/icons/rounded-dark/linkedin-rounded-dark.svg"
+              alt="social media icon"
+              class="social-media-icon"
+          /></a>
+        </div>
+
+        <p
+          style="
+            font-size: 14px;
+            font-weight: 500;
+            color: #fff;
+            margin-top: 10px;
+
+            text-align: center;
+          "
+        >
+          @ 2023 Future Self Institute
+        </p>
+      </div>
+    </div>
+    <script>
+      $(document).ready(function () {
+        // When the form is submitted
+        $("form").on("submit", function (e) {
+          e.preventDefault(); // Prevent the default form submission
+
+          // Show the loading skeleton
+          $("#loadingSkeleton").show();
+
+          // AJAX request to backend
+          $.ajax({
+            type: "POST",
+            url: "https://futureselfie.replit.app/generate-images", // Your API endpoint
+            data: {
+              mainScene: $("#mainScene").val(),
+              location: $("#location").val(),
+              mainCharacter: $("#mainCharacter").val(),
+              additionalCharacters: $("#additionalCharacters").val(),
+              additionalInfo: $("#additionalInfo").val(),
+              fullName: $("#fullName").val(),
+              email: $("#email").val(),
+              affirmation: $("#affirmation"),
+            }, // Form data
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            success: function (response) {
+              // Hide the loading skeleton
+              $("#loadingSkeleton").hide();
+
+              // Log the response to the console for debugging
+              console.log("Response received:", response);
+
+              // Check if the response has imageData and it's not just a single character 'd'
+              if (response.imageData && response.imageData.length > 1) {
+                // Show the generated image
+                $("#generatedImage").attr("src", response.imageData).show();
+
+                console.log("Generated image URL:", response.imageData);
+              } else {
+                // Log an error or handle the case where imageData is not as expected
+                console.error(
+                  "Invalid image data received",
+                  response.imageData
+                );
+              }
+            },
+          });
+        });
+      });
+      const handleDownload = () => {
+        const generatedImage = document.getElementById("generatedImage");
+        if (generatedImage.src) {
+          const img = new Image();
+          img.onload = function () {
+            const newWindow = window.open("", "_blank");
+            const newImg = newWindow.document.createElement("img");
+            newImg.src = generatedImage.src;
+            newWindow.document.body.appendChild(newImg);
+          };
+          img.onerror = function () {
+            alert("Failed to load image.");
+          };
+          img.src = generatedImage.src;
+        } else {
+          alert("No image available to open.");
+        }
+      };
+    </script>
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>

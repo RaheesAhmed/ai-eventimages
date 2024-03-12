@@ -1,0 +1,145 @@
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.content-heading {
+  text-align: center;
+  margin: 2rem;
+}
+
+.content-heading h1 {
+  font-size: 2.5rem;
+}
+
+@media (max-width: 768px) {
+  .content-heading h1 {
+    font-size: 1.5rem;
+  }
+}
+
+.form-container {
+  background-color: #000000;
+  border-radius: 5px;
+  margin: auto;
+  max-width: 600px;
+}
+
+.skeleton-loader {
+  display: none;
+  width: 100%;
+  height: 300px;
+  background-color: #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+}
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.content-heading {
+  text-align: center;
+  color: white;
+  margin: 2rem;
+}
+
+.content-heading h1 {
+  font-size: 2.5rem;
+}
+
+.video-background {
+  width: 100%;
+  padding-top: 56.25%; /* Maintain aspect ratio for the video */
+  position: relative;
+}
+
+.video-foreground iframe {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70%;
+  height: 100%;
+  border: none;
+}
+
+@media (max-width: 768px) {
+  .content-heading h1 {
+    font-size: 1.5rem; /* Smaller font for smaller screens */
+  }
+}
+
+.form-section {
+  padding: 2rem;
+  color: white;
+}
+
+.form-container {
+  background-color: #000000;
+  border-radius: 5px;
+  margin: auto;
+}
+.skeleton-loader {
+  display: none;
+  width: 100%;
+  height: 300px;
+  background-color: #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+}
+
+.skeleton-loader::before {
+  content: "";
+  display: block;
+  position: absolute;
+  left: -150%;
+  top: 0;
+  height: 100%;
+  width: 150%;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    #e0e0e0 50%,
+    transparent 100%
+  );
+  animation: load 1.5s infinite;
+}
+
+@keyframes load {
+  100% {
+    left: 100%;
+  }
+}
+.loader {
+  border: 5px solid #f3f3f3; /* Light grey */
+  border-top: 5px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 2s linear infinite;
+  display: none; /* Hidden by default */
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+#loadingSkeleton {
+  display: none; /* Hidden by default */
+  justify-content: center; /* Center the loader */
+}
+
+/* Adjustments for the generated image display */
+#generatedImage {
+  display: none; /* Hidden by default */
+  max-width: 100%; /* Ensure it fits in its container */
+  margin-top: 20px; /* Space above the image */
+}
