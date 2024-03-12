@@ -47,7 +47,7 @@ const drive = google.drive({ version: "v3", auth: jwtClient });
 
 const imagesDirectory = path.join(__dirname, "public", "images");
 
-const csvFilePath = path.join(__dirname, "FutureSelfie-New-Data.csv");
+const csvFilePath = path.join(__dirname, "events-images.csv");
 
 const savetocsv = async (
   fullName,
@@ -100,7 +100,7 @@ const addTextToImage = async (imageBuffer, text) => {
 };
 
 const handleCSVOnGoogleDrive = async (csvFilePath) => {
-  const fileName = "FutureSelfie-New-Data.csv";
+  const fileName = "events-images.csv";
   const folderId = process.env.GOOGLE_FOLDER_ID;
   console.log("Uploading CSV to Google Drive. Folder ID:", folderId);
 
@@ -144,7 +144,7 @@ const handleCSVOnGoogleDrive = async (csvFilePath) => {
 };
 
 app.post("/generate-images", async (req, res) => {
-  console.log("data recieved:", req.body);
+  console.log("data received:", req.body);
   try {
     const {
       fullName,
@@ -157,13 +157,13 @@ app.post("/generate-images", async (req, res) => {
       affirmation,
     } = req.body;
 
-    const prompt = `Create an ultra-high-definition, 32k resolution cinematic still in a panoramic landscape format. The scene unfolds at ${location}, featuring a vivid portrayal of ${mainScene}. At the heart of the narrative is ${mainCharacter}. They are not solitary; embedded in the scene are characters like ${additionalCharacters}, each with their distinctive flair, together weaving a complex tapestry. To enrich the visual storytelling, incorporate elements such as ${additionalInfo}, ensuring a multi-layered and immersive experience.`;
+    const prompt = `Create an ultra-high-definition, 32k resolution cinematic still in a panoramic landscape format. The scene unfolds at ${location}, featuring a vivid portrayal of ${mainScene}. At the heart of the narrative is ${mainCharacter}. They are not solitary; embedded in the scene are characters like ${additionalCharacters}, each with their distinctive flair, together weaving a complex tapestry. To enrich the visual storytelling, incorporate elements such as ${additionalInfo}, ensuring a multi-layered and immersive experience. Let this image be a visual affirmation of the intention ${affirmation}`;
 
     const imageResponse = await openai.images.generate({
       model: "dall-e-3",
       prompt: prompt,
-      n: 1, // Number of images to generate
-      size: "1792x1024", // Size of the image (can be adjusted as needed)
+      n: 1,
+      size: "1792x1024",
     });
 
     console.log("Generated image data:", imageResponse.data);
@@ -183,37 +183,42 @@ app.post("/generate-images", async (req, res) => {
       generatedImageBuffer,
       "futureselfie.ai"
     );
-    // Save the final image to the local file system
-    const imageName = `image-${Date.now()}.png`; // Generate a unique image name
-    const imagePath = path.join(imagesDirectory, imageName);
-    await fs.promises.writeFile(imagePath, finalImageBuffer);
 
-    // Generate a URL for the saved image
-    const localimageUrl = `${req.protocol}://${req.get(
-      "host"
-    )}/images/${imageName}`;
     // Convert your buffer into a base64 string to send in a JSON response
     const imageBase64 = finalImageBuffer.toString("base64");
 
+    // Send the generated image to the frontend immediately
     res.json({
       message: "Image generated successfully",
       imageData: `data:image/png;base64,${imageBase64}`,
     });
 
-    await savetocsv(
-      fullName,
-      email,
-      mainScene,
-      location,
-      mainCharacter,
-      additionalCharacters,
-      additionalInfo,
-      affirmation,
-      localimageUrl
-    );
-    // After sending response, upload the updated CSV to Google Drive
-    await handleCSVOnGoogleDrive(csvFilePath);
-    console.log("CSV updated and uploaded to Google Drive successfully.\n ");
+    // Handle CSV saving and Google Drive uploading in the background
+    (async () => {
+      const imageName = `image-${Date.now()}.png`;
+      const imagePath = path.join(imagesDirectory, imageName);
+      await fs.promises.writeFile(imagePath, finalImageBuffer);
+
+      const localimageUrl = `${req.protocol}://${req.get(
+        "host"
+      )}/images/${imageName}`;
+
+      await savetocsv(
+        fullName,
+        email,
+        mainScene,
+        location,
+        mainCharacter,
+        additionalCharacters,
+        additionalInfo,
+        affirmation,
+        localimageUrl
+      );
+
+      // Upload the updated CSV to Google Drive
+      await handleCSVOnGoogleDrive(csvFilePath);
+      console.log("CSV updated and uploaded to Google Drive successfully.\n ");
+    })();
   } catch (error) {
     console.error("Error:", error);
     res.status(500).json({ message: "Error generating image" });
