@@ -3,17 +3,21 @@ import { fileURLToPath } from "url";
 import dotenv from "dotenv";
 import OpenAI from "openai";
 import { google } from "googleapis";
-import fs from "fs";
 import cors from "cors";
 import path from "path";
 import bodyParser from "body-parser";
 import sharp from "sharp";
 import axios from "axios";
+import fs from "fs";
+import { Readable } from "stream";
 
 const app = express();
 app.use(cors());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+
+app.use(bodyParser.json({ limit: "50mb" }));
+
+// Middleware for parsing application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 
 dotenv.config();
 
@@ -75,6 +79,7 @@ const savetocsv = async (
     console.log("CSV file created with headers and data.");
   }
 };
+
 const addTextToImage = async (imageBuffer, text) => {
   // Define the text attributes
   const svgText = `
@@ -175,7 +180,7 @@ app.post("/generate-images", async (req, res) => {
       url: imageUrl,
       responseType: "arraybuffer",
     });
-
+    console.log("Image downloaded successfully");
     const generatedImageBuffer = Buffer.from(response.data);
 
     // Add text to the image
@@ -183,6 +188,7 @@ app.post("/generate-images", async (req, res) => {
       generatedImageBuffer,
       "futureselfie.ai"
     );
+    console.log("Text added to image successfully");
 
     // Convert your buffer into a base64 string to send in a JSON response
     const imageBase64 = finalImageBuffer.toString("base64");
@@ -192,36 +198,76 @@ app.post("/generate-images", async (req, res) => {
       message: "Image generated successfully",
       imageData: `data:image/png;base64,${imageBase64}`,
     });
-
+    console.log("Image generated successfully");
     // Handle CSV saving and Google Drive uploading in the background
-    (async () => {
-      const imageName = `image-${Date.now()}.png`;
-      const imagePath = path.join(imagesDirectory, imageName);
-      await fs.promises.writeFile(imagePath, finalImageBuffer);
 
-      const localimageUrl = `${req.protocol}://${req.get(
-        "host"
-      )}/images/${imageName}`;
+    const imageName = `image-${Date.now()}.png`;
+    const imagePath = path.join(imagesDirectory, imageName);
+    await fs.promises.writeFile(imagePath, finalImageBuffer);
 
-      await savetocsv(
-        fullName,
-        email,
-        mainScene,
-        location,
-        mainCharacter,
-        additionalCharacters,
-        additionalInfo,
-        affirmation,
-        localimageUrl
-      );
+    const localimageUrl = `${req.protocol}://${req.get(
+      "host"
+    )}/images/${imageName}`;
+    console.log("localimageUrl", localimageUrl);
+    await savetocsv(
+      fullName,
+      email,
+      mainScene,
+      location,
+      mainCharacter,
+      additionalCharacters,
+      additionalInfo,
+      affirmation,
+      localimageUrl
+    );
+    console.log("CSV updated with image data.");
 
-      // Upload the updated CSV to Google Drive
-      await handleCSVOnGoogleDrive(csvFilePath);
-      console.log("CSV updated and uploaded to Google Drive successfully.\n ");
-    })();
+    // Upload the updated CSV to Google Drive
+    await handleCSVOnGoogleDrive(csvFilePath);
+    console.log("CSV updated and uploaded to Google Drive successfully.\n ");
   } catch (error) {
     console.error("Error:", error);
     res.status(500).json({ message: "Error generating image" });
+  }
+});
+
+app.post("/upload-image", async (req, res) => {
+  const { image } = req.body; // Assuming the image is sent as a base64 encoded string
+  const imageBuffer = Buffer.from(image, "base64");
+
+  try {
+    const folderId = process.env.AI_GOOGLE_FOLDER_ID; // Ensure this environment variable is set to your Google Drive folder ID
+
+    const fileMetadata = {
+      name: `Uploaded_Image_${Date.now()}.png`, // You can customize the file name as needed
+      parents: [folderId],
+    };
+
+    // Convert the Buffer to a stream
+    const imageStream = new Readable();
+    imageStream.push(imageBuffer);
+    imageStream.push(null); // Indicate the end of the stream
+
+    const media = {
+      mimeType: "image/png",
+      body: imageStream,
+    };
+
+    const response = await drive.files.create({
+      requestBody: fileMetadata,
+      media: media,
+      fields: "id", // You can specify other fields if needed
+    });
+
+    console.log(`Image uploaded to Google Drive with ID: ${response.data.id}`);
+
+    res.json({
+      message: "Image uploaded successfully",
+      fileId: response.data.id,
+    });
+  } catch (error) {
+    console.error("Error uploading image to Google Drive:", error);
+    res.status(500).json({ message: "Error uploading image to Google Drive" });
   }
 });
 

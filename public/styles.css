@@ -268,3 +268,11 @@ label {
   font-size: 16px;
   font-weight: 500;
 }
+.download-button-wrapper {
+  display: flex;
+  align-items: center; /* Align items vertically in the center */
+}
+
+#loadingSkeletonupload {
+  margin-left: 10px; /* Add some space between the button and the loader */
+}
